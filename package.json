@@ -1,0 +1,30 @@
+{
+  "name": "homebridge-nature-remo-ceiling-light",
+  "displayName": "Homebridge Nature Remo Ceiling Light",
+  "version": "1.0.0",
+  "description": "Homebridge Plugin to control ceiling light with power and dim button using Nature Remo",
+  "author": "Sasuki Sho",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ssasuki/homebridge-nature-remo-ceiling-light.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ssasuki/homebridge-nature-remo-ceiling-light/issues"
+  },
+  "keywords": [
+    "homebridge-plugin",
+    "homebridge",
+    "apple",
+    "homekit",
+    "nature",
+    "remo",
+    "ceiling",
+    "light"
+  ],
+  "engines": {
+    "node": ">=10.17.0",
+    "homebridge": ">=0.4.8"
+  },
+  "dependencies": {}
+}
