@@ -43,7 +43,7 @@ CeilingLight.prototype.setPower = function(value, callback) {
     if (value) {
       const currentTime = new Date();
 
-      this.log(currentTime);
+      this.log(currentTime + ' currentTime');
       
       const start_day_time_hour = this.start_time_day.split(':')[0];
       const start_day_time_minute = this.start_time_day.split(':')[1];
@@ -52,7 +52,7 @@ CeilingLight.prototype.setPower = function(value, callback) {
       day_start.setMinutes(start_day_time_minute);
       day_start.setSeconds("00");
       
-      this.log(day_start);
+      this.log(day_start + ' day_start');
       
       const start_night_time_hour = this.start_time_night.split(':')[0];
       const start_night_time_minute = this.start_time_night.split(':')[1];
@@ -61,21 +61,21 @@ CeilingLight.prototype.setPower = function(value, callback) {
       night_start.setMinutes(start_night_time_minute);
       night_start.setSeconds("00");
       
-      this.log(night_start);
+      this.log(night_start + ' night_start');
       
       const isDayTime = (currentTime >= day_start && currentTime < night_start);
       
-      this.log(isDayTime);
+      this.log(isDayTime + ' isDayTime');
       
       let signalID
 
       if(isDayTime) {
-       signalID = signal_ID_on_day;
+       signalID = this.signal_ID_on_day;
       } else {
-       signalID = signal_ID_on_night;
+       signalID = this.signal_ID_on_night;
       }
       
-      this.log(signalID);
+      this.log(signalID + ' signalID');
       
       this.sendSignal(signalID, callback);
     } else {
