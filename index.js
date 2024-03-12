@@ -48,9 +48,9 @@ CeilingLight.prototype.setPower = function(value, callback) {
       let signalID;
       
       if (isDayTime) {
-        this.signalID = this.signal_ID_on_day;
+        signalID = this.signal_ID_on_day;
       } else {
-        this.signalID = this.signal_ID_on_night;
+        signalID = this.signal_ID_on_night;
       }
       
       this.sendSignal(signalID, callback);
