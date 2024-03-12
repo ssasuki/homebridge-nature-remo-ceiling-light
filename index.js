@@ -45,12 +45,12 @@ CeilingLight.prototype.setPower = function(value, callback) {
       const currentHour = currentTime.getHours();
       const isDayTime = (currentHour >= this.start_time_day && currentHour < this.start_time_night);
 
-      let signalID
+      let signalID;
       
-      if(isDayTime) {
-        this.signalID = this.signal_ID_on_day
+      if (isDayTime) {
+        this.signalID = this.signal_ID_on_day;
       } else {
-        this.signalID = this.signal_ID_on_night
+        this.signalID = this.signal_ID_on_night;
       }
       
       this.sendSignal(signalID, callback);
