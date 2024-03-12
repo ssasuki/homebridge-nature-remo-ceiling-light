@@ -42,16 +42,40 @@ CeilingLight.prototype.setPower = function(value, callback) {
     
     if (value) {
       const currentTime = new Date();
-      const currentHour = currentTime.getHours();
-      const isDayTime = (currentHour >= this.start_time_day && currentHour < this.start_time_night);
 
-      let signalID;
+      this.log(currentTime);
       
-      if (isDayTime) {
-        signalID = this.signal_ID_on_day;
+      const start_day_time_hour = this.start_time_day.split(':')[0];
+      const start_day_time_minute = this.start_time_day.split(':')[1];
+      let day_start = new Date();
+      day_start.setHours(start_day_time_hour);
+      day_start.setMinutes(start_day_time_minute);
+      day_start.setSeconds("00");
+      
+      this.log(day_start);
+      
+      const start_night_time_hour = this.start_time_night.split(':')[0];
+      const start_night_time_minute = this.start_time_night.split(':')[1];
+      let night_start = new Date();
+      night_start.setHours(start_night_time_hour);
+      night_start.setMinutes(start_night_time_minute);
+      night_start.setSeconds("00");
+      
+      this.log(night_start);
+      
+      const isDayTime = (currentTime >= day_start && currentTime < night_start);
+      
+      this.log(isDayTime);
+      
+      let signalID
+
+      if(isDayTime) {
+       signalID = signal_ID_on_day;
       } else {
-        signalID = this.signal_ID_on_night;
+       signalID = signal_ID_on_night;
       }
+      
+      this.log(signalID);
       
       this.sendSignal(signalID, callback);
     } else {
