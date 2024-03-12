@@ -15,8 +15,8 @@ function CeilingLight(log, config) {
   this.signal_ID_on_day = config["signal_ID_on_day"];
   this.signal_ID_on_night = config["signal_ID_on_night"];
   this.signal_ID_off = config["signal_ID_off"];
-  this.start_time_day = config["start_time_day"] || "06:00:00"; // Default to 6:00 AM
-  this.start_time_night = config["start_time_night"] || "20:30:00"; // Default to 8:30 PM
+  this.start_time_day = config["start_time_day"]; // Start time for day mode in 24-hour format (e.g., "08:00")
+  this.start_time_night = config["start_time_night"]; // Start time for night mode in 24-hour format (e.g., "20:00")
 
   this.state = { power: false };
 
@@ -24,7 +24,7 @@ function CeilingLight(log, config) {
   this.informationService
     .setCharacteristic(Characteristic.Manufacturer, "Homebridge")
     .setCharacteristic(Characteristic.Model, "NatureRemoCeilingLight")
-    .setCharacteristic(Characteristic.SerialNumber, "NRCL-" + this.name);
+    .setCharacteristic(Characteristic.SerialNumber, "NRL-" + this.name);
 
   this.switchService = new Service.Switch(this.name);
   this.switchService.getCharacteristic(Characteristic.On)
@@ -43,14 +43,16 @@ CeilingLight.prototype.setPower = function(value, callback) {
     if (value) {
       const currentTime = new Date();
       const currentHour = currentTime.getHours();
-      const currentMinute = currentTime.getMinutes();
-      const currentSecond = currentTime.getSeconds();
-      const currentDayTime = this.getTimeInSeconds(currentHour, currentMinute, currentSecond);
-      const dayTimeStartSeconds = this.getTimeInSeconds(this.parseTime(this.start_time_day));
-      const nightTimeStartSeconds = this.getTimeInSeconds(this.parseTime(this.start_time_night));
-      const isDayTime = currentDayTime >= dayTimeStartSeconds && currentDayTime < nightTimeStartSeconds;
+      const isDayTime = (currentHour >= this.start_time_day && currentHour < this.start_time_night);
 
-      const signalID = isDayTime ? this.signal_ID_on_day : this.signal_ID_on_night;
+      let signalID
+      
+      if(isDayTime) {
+        this.signalID = this.signal_ID_on_day
+      } else {
+        this.signalID = this.signal_ID_on_night
+      }
+      
       this.sendSignal(signalID, callback);
     } else {
       this.sendSignal(this.signal_ID_off, callback);
@@ -67,24 +69,10 @@ CeilingLight.prototype.sendSignal = function(signalID, callback) {
             '-k --header "Authorization":"Bearer ' + this.access_token + '"';
   exec(cmd, function(error, stdout, stderr) {
     if (error) {
-      this.log('Failed to send signal: ' + error);
+      this.log('Failed to set: ' + error);
       callback(error);
     } else {
-      this.log('Signal sent successfully');
       callback();
     }
   }.bind(this));
-}
-
-CeilingLight.prototype.parseTime = function(timeString) {
-  const parts = timeString.split(':');
-  return {
-    hours: parseInt(parts[0]),
-    minutes: parseInt(parts[1]),
-    seconds: parseInt(parts[2])
-  };
-}
-
-CeilingLight.prototype.getTimeInSeconds = function(timeObj) {
-  return (timeObj.hours * 3600) + (timeObj.minutes * 60) + timeObj.seconds;
 }
