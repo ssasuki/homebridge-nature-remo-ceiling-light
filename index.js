@@ -62,7 +62,6 @@ CeilingLight.prototype.setPower = function(value, callback) {
       this.sendSignal(signalID, callback);
     } else {
       this.sendSignal(this.signal_ID_off, callback);
-      this.log(this.signal_ID_off + ' signalID');
     }
   } else {
     callback();
