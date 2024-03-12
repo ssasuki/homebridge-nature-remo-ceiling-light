@@ -12,11 +12,11 @@ npm install -g homebridge-nature-remo-ceiling-light
     {
       "name": "[Name display in Home app]",
       "access_token": "[Your access_token]",
-      "signal_ID_on": "[aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa]",
-      "signal_ID_bright": "[bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb]",
-      "signal_ID_dim": "[cccccccc-cccc-cccc-cccc-cccccccccccc]",
-      "signal_ID_night": "[dddddddd-dddd-dddd-dddd-dddddddddddd]",
-      "signal_ID_off": "[eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee]",
+      "signal_ID_on_day": "[aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa]",
+      "signal_ID_night": "[bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb]",
+      "signal_ID_off": "[cccccccc-cccc-cccc-cccc-cccccccccccc]",
+      "start_time_day": "[06:00]",
+      "start_time_night": "[20:00]",
       "accessory": "NatureRemoCeilingLight"
     }
   ]
